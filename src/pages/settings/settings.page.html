@@ -1,0 +1,128 @@
+<ion-content [fullscreen]="true" class="settings-page">
+
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <button class="back-btn" (click)="goBack()">←</button>
+      <h1 class="top-bar-title">{{ 'settings.title' | translate }}</h1>
+    </div>
+    <img src="assets/logo/logo.png" alt="Logo" class="top-bar-logo" />
+    <div class="top-bar-line"></div>
+  </header>
+
+  <main class="settings-canvas">
+
+    <!-- Account -->
+    <section class="settings-section">
+      <h2 class="section-label label-blue">{{ 'settings.account' | translate }}</h2>
+      <div class="glass-card list-card">
+        <div class="nav-row" (click)="editProfile()">
+          <div class="nav-row-left">
+            <span class="nav-row-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#97a9ff">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+              </svg>
+            </span>
+            <div class="toggle-info">
+              <span class="toggle-title">{{ 'settings.edit_profile' | translate }}</span>
+              <span class="toggle-desc">{{ 'settings.edit_profile_desc' | translate }}</span>
+            </div>
+          </div>
+          <span class="nav-row-arrow">›</span>
+        </div>
+        <div class="divider"></div>
+        <div class="nav-row" (click)="changePassword()">
+          <div class="nav-row-left">
+            <span class="nav-row-icon">🔑</span>
+            <div class="toggle-info">
+              <span class="toggle-title">{{ 'settings.change_password' | translate }}</span>
+              <span class="toggle-desc">{{ 'settings.change_password_desc' | translate }}</span>
+            </div>
+          </div>
+          <span class="nav-row-arrow">›</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notifications -->
+    <section class="settings-section">
+      <h2 class="section-label label-purple">{{ 'settings.notifications' | translate }}</h2>
+      <div class="glass-card list-card">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">{{ 'settings.push' | translate }}</span>
+            <span class="toggle-desc">{{ 'settings.push_desc' | translate }}</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="pushNotifications"/>
+            <span class="toggle-track" [class.track-on]="pushNotifications">
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">{{ 'settings.reminder' | translate }}</span>
+            <span class="toggle-desc">{{ 'settings.reminder_desc' | translate }}</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="dailyReminder"/>
+            <span class="toggle-track" [class.track-on]="dailyReminder">
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preferences -->
+    <section class="settings-section">
+      <h2 class="section-label label-blue">{{ 'settings.preferences' | translate }}</h2>
+      <div class="glass-card">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">{{ 'settings.dark_mode' | translate }}</span>
+            <span class="toggle-desc">{{ 'settings.dark_mode_desc' | translate }}</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="darkMode"/>
+            <span class="toggle-track track-purple" [class.track-on]="darkMode">
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+        <div class="divider"></div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">{{ 'settings.language' | translate }}</span>
+            <span class="toggle-desc">{{ 'settings.language_desc' | translate }}</span>
+          </div>
+          <select class="lang-select" [(ngModel)]="language">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Danger Zone -->
+    <section class="settings-section danger-section">
+      <div class="danger-card">
+        <div class="danger-header">
+          <span class="danger-icon">⚠</span>
+          <h2 class="section-label label-red" style="margin:0">{{ 'settings.danger' | translate }}</h2>
+        </div>
+        <button class="btn-logout" (click)="logout()">
+          {{ 'settings.logout' | translate }}
+        </button>
+        <button class="btn-delete" (click)="deleteAccount()">
+          {{ 'settings.delete' | translate }}
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <app-bottom-nav></app-bottom-nav>
+
+</ion-content>

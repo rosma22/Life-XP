@@ -1,0 +1,104 @@
+<ion-content [fullscreen]="true" class="login-page">
+
+  <!-- Background Orbs -->
+  <div class="orb orb-blue"></div>
+  <div class="orb orb-purple"></div>
+  <div class="orb orb-secondary"></div>
+
+  <div class="login-canvas">
+
+    <!-- Header -->
+    <header class="login-header">
+      <div class="logo-wrapper">
+        <img src="assets/logo/logo.png" alt="Kinetic Ether Logo" class="logo-img" />
+      </div>
+      <p class="subheadline">Sync with the pulse</p>
+    </header>
+
+    <!-- Glass Card -->
+    <div class="glass-panel">
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <!-- Email -->
+        <div class="field-group">
+          <label class="field-label">Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon">&#64;</span>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="COMMANDER@ETHER.IO"
+              class="field-input"
+              autocomplete="email"
+            />
+          </div>
+          @if (form.get('email')?.invalid && form.get('email')?.touched) {
+            <span class="field-error">Ingresa un email válido.</span>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="field-group">
+          <div class="field-label-row">
+            <label class="field-label">Password</label>
+          </div>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#4facfe">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+              </svg>
+            </span>
+            <input
+              type="password"
+              formControlName="password"
+              placeholder="••••••••"
+              class="field-input"
+              autocomplete="current-password"
+            />
+          </div>
+          @if (form.get('password')?.invalid && form.get('password')?.touched) {
+            <span class="field-error">Mínimo 6 caracteres.</span>
+          }
+        </div>
+
+        @if (errorMessage) {
+          <span class="field-error">{{ errorMessage }}</span>
+        }
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="form.invalid || loading"
+        >
+          @if (loading) {
+            <ion-spinner name="crescent" style="width:20px;height:20px;color:#fff"></ion-spinner>
+          } @else {
+            Log In →
+          }
+        </button>
+
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span class="divider-text">External Authentication</span>
+      </div>
+
+      <!-- Social -->
+      <div class="social-grid">
+        <button class="btn-social">Google</button>
+        <button class="btn-social">Apple ID</button>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="login-footer">
+      <p>New recruit? <a routerLink="/register" class="link">Create Account</a></p>
+    </footer>
+
+  </div>
+
+</ion-content>

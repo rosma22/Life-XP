@@ -1,0 +1,136 @@
+<ion-content [fullscreen]="true" class="profile-page">
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <div class="avatar-sm">👤</div>
+      <span class="top-bar-xp">LVL {{ profile?.level ?? 0 }} • {{ profile?.totalXP ?? 0 }} XP</span>
+    </div>
+    <button class="top-bar-btn">⚡</button>
+  </header>
+
+  <main class="profile-canvas">
+
+    @if (loading) {
+      <div class="center-spinner"><ion-spinner name="crescent"></ion-spinner></div>
+    }
+
+    @if (errorMessage) {
+      <p class="error-msg">{{ errorMessage }}</p>
+    }
+
+    @if (!loading && profile && progress) {
+
+      <!-- Hero -->
+      <section class="hero-section">
+        <div class="avatar-wrapper">
+          <div class="avatar-orb"></div>
+          <div class="avatar-lg">
+            <span style="font-size:64px">👤</span>
+            <div class="avatar-level">{{ profile.level }}</div>
+          </div>
+        </div>
+        <div class="hero-info">
+          <h2 class="hero-name">{{ profile.username }}</h2>
+          <p class="hero-role">{{ 'profile.role' | translate }}</p>
+          <div class="hero-actions">
+            <button class="btn-edit">{{ 'profile.edit' | translate }}</button>
+            <button class="btn-settings" (click)="goToSettings()">{{ 'profile.settings' | translate }}</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Bento -->
+      <section class="bento-grid">
+
+        <!-- XP Chart card -->
+        <div class="bento-card bento-wide">
+          <div class="bento-card-orb"></div>
+          <div class="bento-header">
+            <div>
+              <p class="bento-sublabel">{{ 'profile.weekly' | translate }}</p>
+              <h3 class="bento-big-value">{{ progress.totalXP }} <span class="bento-unit">{{ 'profile.xp_total' | translate }}</span></h3>
+            </div>
+            <span class="bento-trend">📈</span>
+          </div>
+          <!-- XP Progress bar -->
+          <div class="xp-bar-section">
+            <div class="xp-bar-labels">
+              <span>{{ 'profile.xp_next' | translate }}</span>
+              <span>{{ progress.xpToNextLevel }} {{ 'profile.remaining' | translate }}</span>
+            </div>
+            <div class="xp-track">
+              <div class="xp-fill" [style.width]="xpPercent + '%'"></div>
+            </div>
+          </div>
+          <!-- Week bars -->
+          <div class="week-bars">
+            @for (bar of weekBars; track bar.day) {
+              <div class="bar-col">
+                <div class="bar-track">
+                  <div class="bar-fill" [class.bar-active]="bar.active" [style.height]="bar.height + '%'"></div>
+                </div>
+                <span class="bar-day">{{ bar.day }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Focus orb card -->
+        <div class="bento-card bento-focus">
+          <div class="focus-orb-bg"></div>
+          <div class="focus-ring">
+            <span class="focus-pct">{{ xpPercent }}%</span>
+            <span class="focus-label">Progress</span>
+          </div>
+          <h4 class="focus-title">{{ 'profile.level_flow' | translate }}</h4>
+          <p class="focus-sub">{{ 'profile.streak' | translate }}: {{ progress.streak }}</p>
+        </div>
+
+      </section>
+
+      <!-- Achievements -->
+      <section class="achievements-section">
+        <div class="section-header">
+          <h3 class="section-title">{{ 'profile.mastery' | translate }}</h3>
+          <span class="section-link">{{ 'profile.view_all' | translate }}</span>
+        </div>
+        <div class="badges-grid">
+          @for (badge of badges; track badge.icon) {
+            <div class="badge-card" [class.badge-locked]="badge.locked">
+              <div class="badge-glow" [style.background]="badge.color + '33'"></div>
+              <div class="badge-icon-ring" [style.border-color]="badge.color + '50'">
+                <span class="badge-emoji">{{ badge.icon }}</span>
+              </div>
+              <h5 class="badge-name">{{ badge.name }}</h5>
+              <p class="badge-desc">{{ badge.desc }}</p>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Recent Activity -->
+      <section class="activity-section">
+        <h3 class="section-title" style="margin-bottom:16px">{{ 'profile.pulse' | translate }}</h3>
+        <div class="activity-list">
+          @for (item of recentActivity; track item.title) {
+            <div class="activity-item">
+              <div class="activity-accent" [style.background]="item.color"></div>
+              <div class="activity-icon" [style.color]="item.color">{{ item.icon }}</div>
+              <div class="activity-info">
+                <p class="activity-title">{{ item.title }}</p>
+                <p class="activity-time">{{ item.time }}</p>
+              </div>
+              <span class="activity-xp" [style.color]="item.color">+{{ item.xp }} XP</span>
+            </div>
+          }
+        </div>
+      </section>
+
+    }
+
+  </main>
+
+  <app-bottom-nav></app-bottom-nav>
+
+</ion-content>

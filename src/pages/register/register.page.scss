@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Be+Vietnam+Pro:wght@300;400;500&display=swap');
+
+ion-content.register-page {
+  --background: #0e0e0e;
+}
+
+.register-canvas {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Orbs */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-blue-tl {
+  width: 50vw; height: 50vw;
+  background: rgba(62,101,255,0.2);
+  top: -10%; left: -10%;
+  filter: blur(120px);
+}
+.orb-purple-tr {
+  width: 40vw; height: 40vw;
+  background: rgba(199,153,255,0.15);
+  top: 20%; right: -5%;
+  filter: blur(100px);
+}
+.orb-blue-bl {
+  width: 60vw; height: 40vw;
+  background: rgba(62,101,255,0.1);
+  bottom: -5%; left: 20%;
+  filter: blur(140px);
+}
+
+/* Floating decorators */
+.float-deco {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+.float-deco-tr { top: 80px; right: 15%; }
+.float-deco-bl { bottom: 80px; left: 10%; }
+.deco-icon {
+  font-size: 48px;
+  color: #3e65ff;
+  display: block;
+  transform: rotate(12deg);
+}
+.deco-purple { color: #c799ff; transform: rotate(-12deg); }
+
+/* Header */
+.register-header {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.brand-row {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.brand-logo {
+  width: 160px;
+  height: auto;
+  filter: drop-shadow(0 0 20px rgba(62, 101, 255, 0.4));
+}
+.brand-quote {
+  font-family: 'Space Grotesk', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  color: #3e65ff;
+  margin: 0 0 12px;
+}
+.quote-accent { color: #3e65ff; }
+.brand-step {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #adaaaa;
+  margin: 0;
+}
+
+/* Glass card */
+.glass-card {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(32, 32, 31, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 32px;
+  padding: 40px 32px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+/* Fields */
+.field-group { margin-bottom: 24px; }
+.field-label {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c799ff;
+  margin-bottom: 10px;
+}
+.input-wrapper { position: relative; }
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+.field-input {
+  width: 100%;
+  background: #000000;
+  border: none;
+  border-radius: 12px;
+  padding: 18px 16px 18px 46px;
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  outline: none;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s;
+
+  &::placeholder { color: #3a3a3a; }
+  &:focus { box-shadow: 0 0 20px rgba(62,101,255,0.3); }
+}
+.field-error {
+  display: block;
+  font-size: 11px;
+  color: #ff6e84;
+  margin-top: 6px;
+  padding-left: 4px;
+}
+
+/* CTA */
+.cta-wrapper { padding-top: 8px; }
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(90deg, #3e65ff 0%, #c799ff 100%);
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 900;
+  font-size: 17px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 20px 40px rgba(62,101,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+  overflow: hidden;
+  position: relative;
+
+  &:hover { box-shadow: 0 25px 50px rgba(199,153,255,0.4); }
+  &:active { transform: scale(0.98); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+/* Card footer */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: 32px;
+  padding-top: 24px;
+}
+.card-footer-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #adaaaa;
+}
+.social-row { display: flex; gap: 12px; }
+.btn-social-icon {
+  width: 40px; height: 40px;
+  background: rgba(38,38,38,1);
+  border: none;
+  border-radius: 10px;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover { background: rgba(62,101,255,0.2); color: #fff; }
+}
+.btn-social-purple:hover { background: rgba(199,153,255,0.2) !important; }
+
+/* Page footer */
+.page-footer {
+  margin-top: 40px;
+  text-align: center;
+
+  p {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 13px;
+    color: #555;
+    margin: 0;
+  }
+}
+.link {
+  color: #3e65ff;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 4px;
+  transition: color 0.2s;
+
+  &:hover { color: #c799ff; }
+}

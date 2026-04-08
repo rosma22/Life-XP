@@ -1,0 +1,133 @@
+<ion-content [fullscreen]="true" class="register-page">
+
+  <!-- Background Orbs -->
+  <div class="orb orb-blue-tl"></div>
+  <div class="orb orb-purple-tr"></div>
+  <div class="orb orb-blue-bl"></div>
+
+  <!-- Floating decorators -->
+  <div class="float-deco float-deco-tr">
+    <span class="deco-icon">⬡</span>
+  </div>
+  <div class="float-deco float-deco-bl">
+    <span class="deco-icon deco-purple">◆</span>
+  </div>
+
+  <main class="register-canvas">
+
+    <!-- Header -->
+    <header class="register-header">
+      <div class="brand-row">
+        <img src="assets/logo/logo.png" alt="Kinetic Ether Logo" class="brand-logo" />
+      </div>
+      <p class="brand-quote">Your journey<br/><span class="quote-accent">starts here</span></p>
+      <p class="brand-step">Step 01 / Initializing Protocol</p>
+    </header>
+
+    <!-- Card -->
+    <section class="glass-card">
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <!-- Username -->
+        <div class="field-group">
+          <label class="field-label">Username</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#3e65ff">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+              </svg>
+            </span>
+            <input
+              type="text"
+              formControlName="username"
+              placeholder="ENTER USERNAME"
+              class="field-input"
+              autocomplete="username"
+            />
+          </div>
+          @if (form.get('username')?.invalid && form.get('username')?.touched) {
+            <span class="field-error">Username requerido.</span>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="field-group">
+          <label class="field-label">Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#3e65ff">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </span>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="EMAIL&#64;PROTOCOL.COM"
+              class="field-input"
+              autocomplete="email"
+            />
+          </div>
+          @if (form.get('email')?.invalid && form.get('email')?.touched) {
+            <span class="field-error">Ingresa un email válido.</span>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="field-group">
+          <label class="field-label">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#3e65ff">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+              </svg>
+            </span>
+            <input
+              type="password"
+              formControlName="password"
+              placeholder="••••••••"
+              class="field-input"
+              autocomplete="new-password"
+            />
+          </div>
+          @if (form.get('password')?.invalid && form.get('password')?.touched) {
+            <span class="field-error">Mínimo 6 caracteres.</span>
+          }
+        </div>
+
+        @if (errorMessage) {
+          <span class="field-error">{{ errorMessage }}</span>
+        }
+
+        <!-- Submit -->
+        <div class="cta-wrapper">
+          <button type="submit" class="btn-primary" [disabled]="form.invalid || loading">
+            @if (loading) {
+              <ion-spinner name="crescent" style="width:22px;height:22px;color:#fff"></ion-spinner>
+            } @else {
+              ENGAGE MISSIONS →
+            }
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Footer of card -->
+      <div class="card-footer">
+        <span class="card-footer-label">Linked Protocols</span>
+        <div class="social-row">
+          <button class="btn-social-icon">G</button>
+          <button class="btn-social-icon btn-social-purple">&gt;_</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Page footer -->
+    <footer class="page-footer">
+      <p>Already a member? <a routerLink="/login" class="link">Log In</a></p>
+    </footer>
+
+  </main>
+
+</ion-content>

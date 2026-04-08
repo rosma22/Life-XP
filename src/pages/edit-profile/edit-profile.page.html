@@ -1,0 +1,95 @@
+<ion-content [fullscreen]="true" class="edit-profile-page">
+
+  <header class="top-bar">
+    <button class="back-btn" (click)="goBack()">←</button>
+    <h1 class="top-bar-title">{{ 'edit.title' | translate }}</h1>
+    <div class="spacer"></div>
+    <div class="top-bar-line"></div>
+  </header>
+
+  <main class="edit-canvas">
+
+    @if (loading) {
+      <div class="center-spinner"><ion-spinner name="crescent"></ion-spinner></div>
+    }
+
+    @if (!loading) {
+    <div class="avatar-section">
+      <div class="avatar-neon-border">
+        <div class="avatar-inner">
+          <span class="avatar-emoji">👤</span>
+        </div>
+      </div>
+      <button class="avatar-edit-btn">✏</button>
+      <p class="avatar-label">{{ 'edit.change_avatar' | translate }}</p>
+    </div>
+
+    <!-- Form -->
+    <div class="form-sections">
+
+      <!-- Username -->
+      <div class="glass-field glow-blue">
+        <label class="field-label label-blue">{{ 'edit.username' | translate }}</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            class="field-input"
+            [(ngModel)]="username"
+            [placeholder]="'edit.username' | translate"
+          />
+          <span class="input-suffix">&#64;</span>
+        </div>
+      </div>
+
+      <!-- Email (read-only) -->
+      <div class="glass-field readonly-field">
+        <label class="field-label label-muted">{{ 'edit.email' | translate }}</label>
+        <div class="input-wrapper">
+          <input
+            type="email"
+            class="field-input field-readonly"
+            [value]="email"
+            readonly
+          />
+          <span class="input-suffix">🔒</span>
+        </div>
+        <p class="field-hint">{{ 'edit.email_hint' | translate }}</p>
+      </div>
+
+      <!-- Bio -->
+      <div class="glass-field glow-purple">
+        <label class="field-label label-purple">{{ 'edit.bio' | translate }}</label>
+        <textarea
+          class="field-textarea"
+          [(ngModel)]="bio"
+          [placeholder]="'edit.bio_placeholder' | translate"
+          rows="4"
+        ></textarea>
+      </div>
+
+    </div>
+
+    <!-- Save -->
+    <div class="save-section">
+      <button class="btn-save" (click)="save()" [disabled]="saving">
+        @if (saving) {
+          <ion-spinner name="crescent" style="width:18px;height:18px;color:#002283"></ion-spinner>
+        } @else {
+          {{ 'edit.save' | translate }}
+        }
+      </button>
+      @if (successMsg) {
+        <p class="success-msg">{{ successMsg }}</p>
+      }
+      @if (errorMsg) {
+        <p class="error-msg">{{ errorMsg }}</p>
+      }
+    </div>
+
+    } <!-- end !loading -->
+
+  </main>
+
+  <app-bottom-nav></app-bottom-nav>
+
+</ion-content>

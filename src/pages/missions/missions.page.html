@@ -1,0 +1,117 @@
+<ion-content [fullscreen]="true" class="missions-page">
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <div class="avatar-ring">👤</div>
+      <span class="top-bar-xp">LVL {{ (store.user()?.level ?? 0) }} • {{ (store.user()?.totalXP ?? 0) }} XP</span>
+    </div>
+    <button class="top-bar-btn" routerLink="/profile">⚡</button>
+  </header>
+
+  <main class="missions-canvas">
+
+    <!-- Streak Banner -->
+    <section class="streak-banner">
+      <div class="streak-bg-orb"></div>
+      <div class="streak-info">
+        <p class="streak-label">{{ 'missions.momentum' | translate }}</p>
+        <h2 class="streak-value">{{ (store.user()?.streak ?? 0) }} {{ 'missions.streak' | translate }}</h2>
+      </div>
+      <div class="streak-icon">🔥</div>
+    </section>
+
+    <!-- Section header -->
+    <div class="section-header">
+      <h3 class="section-title">{{ 'missions.title' | translate }}</h3>
+      <span class="section-count">{{ pendingCount }} {{ 'missions.remaining' | translate }}</span>
+    </div>
+
+    <!-- Loading -->
+    @if (loading()) {
+      <div class="center-spinner">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    }
+
+    @if (errorMessage) {
+      <p class="error-msg">{{ errorMessage }}</p>
+    }
+
+    <!-- Mission Cards -->
+    @if (!loading() && missions().length === 0 && !errorMessage) {
+      <div class="empty-state">
+        <p>{{ 'missions.empty' | translate }}</p>
+      </div>
+    }
+
+    @if (!loading() && missions().length > 0) {
+      <div class="cards-list">
+        @for (m of missions(); track m.id) {
+          <article class="mission-card" [class.card-completed]="m.status === 'completed'" [class.card-expired]="m.status === 'expired'">
+            <div class="card-accent" [style.background]="statusAccentColor(m.status)"></div>
+
+            <div class="card-top">
+              <div class="card-meta-col">
+                <span class="card-tag" [style.color]="categoryColor(m.mission.category)">{{ m.mission.category }}</span>
+                <h4 class="card-title">{{ m.mission.title }}</h4>
+                <p class="card-desc">{{ m.mission.description }}</p>
+              </div>
+              <div class="card-emoji">{{ categoryEmoji(m.mission.category) }}</div>
+            </div>
+
+            <div class="card-bottom">
+              <!-- Progress bar -->
+              <div class="progress-track">
+                <div class="progress-fill" [style.width]="m.status === 'completed' ? '100%' : '0%'" [style.background]="statusAccentColor(m.status)"></div>
+              </div>
+
+              <div class="card-footer-row">
+                <span class="card-time">~{{ m.mission.estimatedMinutes }} min • {{ m.mission.xpReward }} XP</span>
+
+                @if (m.status === 'pending') {
+                  <button class="btn-action btn-start" (click)="complete(m)">
+                    {{ 'missions.complete' | translate }}
+                  </button>
+                }
+                @if (m.status === 'completed') {
+                  <div class="status-done">{{ 'missions.completed' | translate }} +{{ m.mission.xpReward }} XP</div>
+                }
+                @if (m.status === 'expired') {
+                  <div class="status-expired">{{ 'missions.expired' | translate }}</div>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+
+    <!-- Stats Bento -->
+    @if (!loading() && store.user()) {
+      <div class="bento-grid">
+        <div class="bento-cell">
+          <span class="bento-icon">⭐</span>
+          <p class="bento-label">Completed</p>
+          <p class="bento-value bento-purple">{{ completedCount }}</p>
+        </div>
+        <div class="bento-cell">
+          <span class="bento-icon">⏱</span>
+          <p class="bento-label">Streak</p>
+          <p class="bento-value bento-blue">{{ store.user()?.streak ?? 0 }}d</p>
+        </div>
+        <div class="bento-cell bento-wide">
+          <div>
+            <p class="bento-label bento-blue-label">Total XP</p>
+            <p class="bento-value-lg">{{ store.user()?.totalXP ?? 0 }} pts</p>
+          </div>
+          <span class="bento-badge">🏅</span>
+        </div>
+      </div>
+    }
+
+  </main>
+
+  <app-bottom-nav></app-bottom-nav>
+
+</ion-content>

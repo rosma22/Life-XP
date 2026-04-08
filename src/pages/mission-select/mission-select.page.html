@@ -1,0 +1,91 @@
+<ion-content [fullscreen]="true" class="mission-select-page">
+
+  <!-- Background pulses -->
+  <div class="bg-pulse bg-pulse-tr"></div>
+  <div class="bg-pulse bg-pulse-bl"></div>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <span class="top-bar-icon">⊞</span>
+    <h1 class="top-bar-title">MISSIONS</h1>
+    <div class="top-bar-avatar">
+      <span style="font-size:18px">👤</span>
+    </div>
+  </header>
+
+  <main class="select-canvas">
+
+    <!-- Hero -->
+    <div class="hero-section">
+      <h2 class="hero-title">Available Missions</h2>
+      <p class="hero-sub">Complete objectives to earn XP and climb the rankings.</p>
+    </div>
+
+    <!-- Categories -->
+    <div class="categories-scroll">
+      @for (cat of categories; track cat.key) {
+        <button
+          class="cat-pill"
+          [class.cat-pill-active]="activeCategory() === cat.key"
+          (click)="activeCategory.set(cat.key)"
+        >{{ cat.label }}</button>
+      }
+    </div>
+
+    <!-- Loading -->
+    @if (loading) {
+      <div class="center-spinner">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    }
+
+    @if (errorMessage) {
+      <p class="error-msg">{{ errorMessage }}</p>
+    }
+
+    <!-- Mission Cards -->
+    @if (!loading) {
+      <div class="cards-list">
+        @for (m of filteredMissions(); track m.id) {
+          <article class="mission-card" [class.selected]="isSelected(m.id)">
+            <div class="card-accent" [style.background]="categoryColor(m.category)"></div>
+
+            <div class="card-body">
+              <div class="card-left">
+                <div class="card-icon" [style.border-color]="categoryColor(m.category) + '40'">
+                  <span class="cat-emoji">{{ categoryEmoji(m.category) }}</span>
+                </div>
+                <div class="card-info">
+                  <div class="card-meta">
+                    <span class="badge-diff" [style.color]="diffColor(m.difficulty)">{{ m.difficulty }}</span>
+                    <span class="badge-xp">+{{ m.xpReward }} XP</span>
+                  </div>
+                  <h3 class="card-title">{{ m.title }}</h3>
+                  <p class="card-desc">{{ m.description }}</p>
+                </div>
+              </div>
+
+              <button
+                class="btn-select"
+                [class.btn-selected]="isSelected(m.id)"
+                (click)="toggleSelect(m.id)"
+              >
+                {{ isSelected(m.id) ? '✓ SELECTED' : 'SELECT' }}
+              </button>
+            </div>
+          </article>
+        }
+      </div>
+    }
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="nav-item" (click)="confirmSelection()" [disabled]="selectedIds.size === 0">
+      <span class="nav-icon">🚀</span>
+      <span class="nav-label">CONFIRM ({{ selectedIds.size }})</span>
+    </button>
+  </nav>
+
+</ion-content>
