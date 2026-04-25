@@ -7,6 +7,7 @@ import { AppStore } from '../../store/app.store'
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component'
 import { I18nService, Lang } from '../../services/i18n.service'
 import { TranslatePipe } from '../../pipes/translate.pipe'
+import { ThemeService } from '../../services/theme.service'
 
 @Component({
   selector: 'app-settings',
@@ -18,7 +19,9 @@ import { TranslatePipe } from '../../pipes/translate.pipe'
 export class SettingsPage {
   pushNotifications = true
   dailyReminder = false
-  darkMode = true
+
+  get darkMode(): boolean { return this.theme.isDark() }
+  set darkMode(val: boolean) { this.theme.toggle(val) }
 
   get language(): Lang { return this.i18n.lang() }
   set language(val: Lang) { this.i18n.setLang(val) }
@@ -30,14 +33,17 @@ export class SettingsPage {
     private auth: AuthService,
     private store: AppStore,
     private router: Router,
-    readonly i18n: I18nService
+    readonly i18n: I18nService,
+    readonly theme: ThemeService
   ) {}
 
   goBack(): void { this.router.navigate(['/profile']) }
   editProfile(): void {
     this.router.navigate(['/edit-profile'])
   }
-  changePassword(): void {}
+  changePassword(): void {
+    this.router.navigate(['/change-password'])
+  }
 
   async logout(): Promise<void> {
     await this.auth.logout()

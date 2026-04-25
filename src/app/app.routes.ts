@@ -37,5 +37,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../pages/settings/settings.page').then(m => m.SettingsPage),
   },
+  {
+    path: 'change-password',
+    loadComponent: () =>
+      import('../pages/change-password/change-password.page').then(m => m.ChangePasswordPage),
+  },
   { path: '**', redirectTo: 'login' },
 ]

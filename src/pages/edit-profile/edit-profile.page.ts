@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router'
+import { HttpClient } from '@angular/common/http'
+import { firstValueFrom } from 'rxjs'
 import { IonContent, IonSpinner } from '@ionic/angular/standalone'
 import { AppStore } from '../../store/app.store'
 import { I18nService } from '../../services/i18n.service'
@@ -8,6 +10,8 @@ import { TranslatePipe } from '../../pipes/translate.pipe'
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component'
 import { ProgressService } from '../../services/progress.service'
 import { AuthService } from '../../services/auth.service'
+
+const API_BASE = 'http://localhost:3000'
 
 @Component({
   selector: 'app-edit-profile',
@@ -30,6 +34,7 @@ export class EditProfilePage implements OnInit {
     private router: Router,
     private progressService: ProgressService,
     private auth: AuthService,
+    private http: HttpClient,
     readonly i18n: I18nService
   ) {}
 
@@ -45,6 +50,7 @@ export class EditProfilePage implements OnInit {
     try {
       const profile = await this.progressService.getUserProfile()
       this.username = profile.username ?? ''
+      this.bio = profile.description ?? ''
       this.store.setUser(profile)
 
       // Si el email no está en el store, leerlo desde Preferences
@@ -68,12 +74,17 @@ export class EditProfilePage implements OnInit {
     this.successMsg = ''
     this.errorMsg = ''
     try {
-      // TODO: llamar al endpoint PUT /users/profile cuando esté disponible
-      await new Promise(r => setTimeout(r, 800))
-      // Actualizar el store con el nuevo username
+      const token = await this.auth.getToken()
+      await firstValueFrom(
+        this.http.patch(
+          `${API_BASE}/users/profile`,
+          { username: this.username, description: this.bio },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+      )
       const current = this.store.user()
       if (current) {
-        this.store.setUser({ ...current, username: this.username })
+        this.store.setUser({ ...current, username: this.username, description: this.bio })
       }
       this.successMsg = this.i18n.t('edit.success')
     } catch {

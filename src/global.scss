@@ -8,3 +8,92 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+/* ── Light mode overrides ── */
+body.light-mode {
+  --bg-primary: #f0f2ff;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-input: rgba(230, 232, 255, 0.6);
+  --text-primary: #0d0d2b;
+  --text-muted: #5a5a7a;
+  --border-color: rgba(100, 100, 200, 0.15);
+  --topbar-bg: rgba(240, 242, 255, 0.8);
+
+  ion-content {
+    --background: var(--bg-primary) !important;
+  }
+
+  /* Top bars */
+  .top-bar {
+    background: var(--topbar-bg) !important;
+  }
+  .top-bar-title, .back-btn {
+    color: #3a3a8a !important;
+  }
+
+  /* Glass cards */
+  .glass-card, .glass-field, .glass-panel {
+    background: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: 0 4px 24px rgba(100, 100, 200, 0.08) !important;
+  }
+
+  /* Text */
+  .toggle-title, .account-name, .top-bar-brand {
+    color: var(--text-primary) !important;
+  }
+  .toggle-desc, .account-email, .field-hint, .avatar-label, .lock-label {
+    color: var(--text-muted) !important;
+  }
+
+  /* Inputs */
+  .field-input, .field-textarea {
+    background: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    &::placeholder { color: #9999bb !important; }
+    &:focus { background: rgba(200, 205, 255, 0.8) !important; }
+  }
+
+  /* Dividers */
+  .divider { background: rgba(100, 100, 200, 0.1) !important; }
+
+  /* Toggle track off state */
+  .toggle-track { background: #c8caee !important; }
+
+  /* Lang select */
+  .lang-select {
+    background: #e8eaff !important;
+    color: #3a3a8a !important;
+    border-color: rgba(100, 100, 200, 0.3) !important;
+    option { background: #f0f2ff !important; color: #0d0d2b !important; }
+  }
+
+  /* Nav rows */
+  .nav-row:hover { background: rgba(100, 100, 200, 0.05) !important; }
+  .nav-row-arrow { color: #aaaacc !important; }
+
+  /* Buttons */
+  .btn-social {
+    background: #e8eaff !important;
+    color: #3a3a8a !important;
+    border-color: rgba(100, 100, 200, 0.2) !important;
+  }
+
+  /* Login/Register page */
+  .login-canvas, .register-canvas {
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.9) !important;
+    }
+    .field-label { color: #3a3a8a !important; }
+    .subheadline, .login-footer p, .register-footer p { color: var(--text-muted) !important; }
+    .link { color: #97a9ff !important; }
+    .divider-text { color: var(--text-muted) !important; }
+  }
+
+  /* Orbs — soften in light mode */
+  .orb { opacity: 0.15 !important; }
+
+  /* Bottom nav */
+  --nav-bg: rgba(240, 242, 255, 0.92);
+  --nav-border: rgba(100, 100, 200, 0.12);
+}

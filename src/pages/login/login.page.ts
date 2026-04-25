@@ -43,21 +43,24 @@ export class LoginPage {
     const { email, password } = this.form.value
     try {
       await this.auth.login(email, password)
-      // Guardar email en store
       this.store.setEmail(email)
-      // Verificar si tiene misiones asignadas
-      const missions = await this.missionService.getDailyMissions()
-      if (missions.length === 0) {
-        await this.router.navigate(['/mission-select'])
-      } else {
-        await this.router.navigate(['/missions'])
-      }
     } catch (err: any) {
       if (err?.status === 401) {
         this.errorMessage = 'Email o contraseña incorrectos.'
       } else {
         this.errorMessage = 'Error al iniciar sesión. Intenta de nuevo.'
       }
+      this.loading = false
+      return
+    }
+
+    try {
+      const missions = await this.missionService.getDailyMissions()
+      console.log('[login] missions response:', missions)
+      await this.router.navigate([missions.length === 0 ? '/mission-select' : '/missions'])
+    } catch {
+      // Si falla la consulta de misiones, ir a missions de todas formas
+      await this.router.navigate(['/missions'])
     } finally {
       this.loading = false
     }

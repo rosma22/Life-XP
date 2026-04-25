@@ -2,6 +2,7 @@ import { Component, OnInit, computed } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { IonContent, IonSpinner, ToastController } from '@ionic/angular/standalone'
 import { MissionService } from '../../services/mission.service'
+import { ProgressService } from '../../services/progress.service'
 import { AppStore } from '../../store/app.store'
 import { UserMission, CompletionResult } from '../../types'
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component'
@@ -30,13 +31,21 @@ export class MissionsPage implements OnInit {
 
   constructor(
     private missionService: MissionService,
+    private progressService: ProgressService,
     readonly store: AppStore,
     private toastCtrl: ToastController,
     readonly i18n: I18nService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.loadMissions()
+    await Promise.all([this.loadMissions(), this.loadProfile()])
+  }
+
+  async loadProfile(): Promise<void> {
+    try {
+      const profile = await this.progressService.getUserProfile()
+      this.store.setUser(profile)
+    } catch { /* si falla, usa lo que hay en el store */ }
   }
 
   async loadMissions(): Promise<void> {

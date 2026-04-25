@@ -53,10 +53,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
       align-items: center;
       justify-content: space-around;
       padding: 14px 16px 32px;
-      background: rgba(14, 14, 14, 0.85);
+      background: var(--nav-bg, rgba(14, 14, 14, 0.85));
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid var(--nav-border, rgba(255,255,255,0.06));
       border-radius: 28px 28px 0 0;
       box-shadow: 0 -20px 40px rgba(0,0,0,0.6);
     }

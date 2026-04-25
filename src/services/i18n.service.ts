@@ -92,6 +92,18 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'settings.danger': 'Danger Zone',
     'settings.logout': '⏻ LOGOUT',
     'settings.delete': 'Delete Account Permanently',
+    // Change Password
+    'pwd.title': 'CHANGE PASSWORD',
+    'pwd.subtitle': 'Update Access Credentials',
+    'pwd.current': 'Current Password',
+    'pwd.new': 'New Password',
+    'pwd.confirm': 'Confirm New Password',
+    'pwd.min_length': 'Minimum 6 characters',
+    'pwd.mismatch': 'Passwords do not match',
+    'pwd.save': 'UPDATE PASSWORD',
+    'pwd.success': 'Password updated successfully.',
+    'pwd.error_wrong': 'Current password is incorrect.',
+    'pwd.error_generic': 'Could not update password. Try again.',
     // Edit Profile
     'edit.title': 'EDIT PROFILE',
     'edit.change_avatar': 'Change Avatar',
@@ -194,6 +206,18 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'settings.logout': '⏻ CERRAR SESIÓN',
     'settings.delete': 'Eliminar Cuenta Permanentemente',
 
+    // Change Password
+    'pwd.title': 'CAMBIAR CONTRASEÑA',
+    'pwd.subtitle': 'Actualizar Credenciales de Acceso',
+    'pwd.current': 'Contraseña Actual',
+    'pwd.new': 'Nueva Contraseña',
+    'pwd.confirm': 'Confirmar Nueva Contraseña',
+    'pwd.min_length': 'Mínimo 6 caracteres',
+    'pwd.mismatch': 'Las contraseñas no coinciden',
+    'pwd.save': 'ACTUALIZAR CONTRASEÑA',
+    'pwd.success': 'Contraseña actualizada correctamente.',
+    'pwd.error_wrong': 'La contraseña actual es incorrecta.',
+    'pwd.error_generic': 'No se pudo actualizar la contraseña. Intenta de nuevo.',
     // Edit Profile
     'edit.title': 'EDITAR PERFIL',
     'edit.change_avatar': 'Cambiar Avatar',

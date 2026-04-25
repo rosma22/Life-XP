@@ -36,7 +36,7 @@ export class MissionService {
 
   completeMission(missionId: string): Promise<CompletionResult> {
     return firstValueFrom(
-      this.http.post<CompletionResult>(`${API_BASE}/missions/${missionId}/complete`, {})
+      this.http.post<CompletionResult>(`${API_BASE}/user-missions/complete`, { userMissionId: missionId })
     )
   }
 

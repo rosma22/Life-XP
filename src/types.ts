@@ -49,6 +49,7 @@ export interface User {
 export interface UserProfile {
   id: string
   username: string
+  description?: string
   level: number
   totalXP: number
   streak: number
