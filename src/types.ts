@@ -5,10 +5,19 @@ export type MissionCategory = 'fitness' | 'learning' | 'finance' | 'habits'
 export type Difficulty = 'easy' | 'medium' | 'hard'
 export type MissionStatus = 'pending' | 'completed' | 'expired'
 
-export interface Mission {
-  id: string
+export interface MissionTranslation {
   title: string
   description: string
+}
+
+export interface Mission {
+  id: string
+  title: string // deprecated - usar translations
+  description: string // deprecated - usar translations
+  translations?: {
+    en: MissionTranslation
+    es: MissionTranslation
+  }
   category: MissionCategory
   difficulty: Difficulty
   xpReward: number
@@ -63,6 +72,28 @@ export interface CompletionResult {
   newLevel: number
   leveledUp: boolean
   streak: number
+}
+
+export interface Achievement {
+  id: string
+  title: string
+  description: string
+  icon: string
+  category: string
+  requirement: number
+  unlocked: boolean
+  progress: number
+  unlockedAt?: string
+  translations?: {
+    en: { title: string; description: string }
+    es: { title: string; description: string }
+  }
+}
+
+export interface AchievementsResponse {
+  achievements: Achievement[]
+  totalUnlocked: number
+  totalAvailable: number
 }
 
 export interface ProgressResult {

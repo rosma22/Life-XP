@@ -4,7 +4,7 @@ import { IonContent, IonSpinner, ToastController } from '@ionic/angular/standalo
 import { MissionService } from '../../services/mission.service'
 import { ProgressService } from '../../services/progress.service'
 import { AppStore } from '../../store/app.store'
-import { UserMission, CompletionResult } from '../../types'
+import { UserMission, CompletionResult, Mission } from '../../types'
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component'
 import { I18nService } from '../../services/i18n.service'
 import { TranslatePipe } from '../../pipes/translate.pipe'
@@ -22,8 +22,12 @@ export class MissionsPage implements OnInit {
   readonly missions = this.store.missions
   readonly loading = this.store.loading
 
+  readonly pendingMissions = computed(() =>
+    this.store.missions().filter(m => m.status === 'pending')
+  )
+
   readonly pendingCount = computed(() =>
-    this.store.missions().filter(m => m.status === 'pending').length
+    this.pendingMissions().length
   )
   readonly completedCount = computed(() =>
     this.store.missions().filter(m => m.status === 'completed').length
@@ -37,7 +41,28 @@ export class MissionsPage implements OnInit {
     readonly i18n: I18nService
   ) {}
 
+  getMissionTitle(mission: Mission): string {
+    const lang = this.i18n.lang()
+    return mission.translations?.[lang]?.title ?? mission.title
+  }
+
+  getMissionDescription(mission: Mission): string {
+    const lang = this.i18n.lang()
+    return mission.translations?.[lang]?.description ?? mission.description
+  }
+
   async ngOnInit(): Promise<void> {
+    await Promise.all([this.loadMissions(), this.loadProfile()])
+  }
+
+  async ionViewWillEnter(): Promise<void> {
+    // Primero verificar/actualizar racha
+    try {
+      await this.progressService.checkStreak()
+    } catch {
+      // Si el endpoint no existe, continuar sin error
+    }
+    // Luego cargar datos actualizados
     await Promise.all([this.loadMissions(), this.loadProfile()])
   }
 

@@ -55,13 +55,19 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'select.cat.habits': 'Skills',
     'select.cat.finance': 'Finance',
 
+    // Mission translations (add your mission titles/descriptions here)
+    'mission.walk_10k.title': 'Walk 10,000 steps',
+    'mission.walk_10k.desc': 'Complete 10,000 steps today',
+    'mission.read_30min.title': 'Read for 30 minutes',
+    'mission.read_30min.desc': 'Read a book or article for at least 30 minutes',
+
     // Profile
     'profile.role': 'Productivity Architect',
     'profile.edit': '✏ EDIT PROFILE',
     'profile.settings': '⚙ SETTINGS',
     'profile.weekly': 'Weekly Velocity',
     'profile.xp_total': 'XP TOTAL',
-    'profile.mastery': 'Hall of Mastery',
+    'profile.mastery': 'Achievements',
     'profile.view_all': 'View All',
     'profile.pulse': 'Recent Pulse',
     'profile.progress': 'Progress',
@@ -168,13 +174,19 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'select.cat.habits': 'Hábitos',
     'select.cat.finance': 'Finanzas',
 
+    // Mission translations (traducciones de misiones)
+    'mission.walk_10k.title': 'Caminar 10,000 pasos',
+    'mission.walk_10k.desc': 'Completa 10,000 pasos hoy',
+    'mission.read_30min.title': 'Leer por 30 minutos',
+    'mission.read_30min.desc': 'Lee un libro o artículo por al menos 30 minutos',
+
     // Profile
     'profile.role': 'Arquitecto de Productividad',
     'profile.edit': '✏ EDITAR PERFIL',
     'profile.settings': '⚙ AJUSTES',
     'profile.weekly': 'Velocidad Semanal',
     'profile.xp_total': 'XP TOTAL',
-    'profile.mastery': 'Salón de la Maestría',
+    'profile.mastery': 'Logros',
     'profile.view_all': 'Ver Todo',
     'profile.pulse': 'Actividad Reciente',
     'profile.progress': 'Progreso',

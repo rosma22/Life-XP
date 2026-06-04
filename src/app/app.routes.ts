@@ -23,6 +23,11 @@ export const routes: Routes = [
       import('../pages/missions/missions.page').then(m => m.MissionsPage),
   },
   {
+    path: 'rankings',
+    loadComponent: () =>
+      import('../pages/rankings/rankings.page').then(m => m.RankingsPage),
+  },
+  {
     path: 'profile',
     loadComponent: () =>
       import('../pages/profile/profile.page').then(m => m.ProfilePage),

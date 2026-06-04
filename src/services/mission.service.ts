@@ -4,8 +4,9 @@ import { Observable, from, switchMap } from 'rxjs'
 import { firstValueFrom } from 'rxjs'
 import { AuthService } from './auth.service'
 import { UserMission, CompletionResult, Mission } from '../types'
+import { environment } from '../environments/environment'
 
-const API_BASE = 'http://localhost:3000'
+const API_BASE = environment.apiUrl
 
 // JWT interceptor — attaches Authorization header to every outgoing request
 @Injectable()

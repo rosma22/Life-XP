@@ -60,8 +60,8 @@
                     <span class="badge-diff" [style.color]="diffColor(m.difficulty)">{{ m.difficulty }}</span>
                     <span class="badge-xp">+{{ m.xpReward }} XP</span>
                   </div>
-                  <h3 class="card-title">{{ m.title }}</h3>
-                  <p class="card-desc">{{ m.description }}</p>
+                  <h3 class="card-title">{{ getMissionTitle(m) }}</h3>
+                  <p class="card-desc">{{ getMissionDescription(m) }}</p>
                 </div>
               </div>
 
@@ -79,6 +79,9 @@
     }
 
   </main>
+
+  <!-- Bottom Navigation -->
+  <app-bottom-nav></app-bottom-nav>
 
   <!-- Bottom Nav -->
   <nav class="bottom-nav">

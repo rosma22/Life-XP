@@ -1,0 +1,136 @@
+<ion-content class="rankings-page" [fullscreen]="true">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="avatar-ring">{{ currentUser.avatar }}</div>
+      <span class="top-bar-xp">LVL {{ currentUser.level }} • {{ currentUser.xp }} XP</span>
+    </div>
+    <button class="top-bar-btn" (click)="goToProfile()">
+      ⚙️
+    </button>
+  </div>
+
+  <!-- Canvas -->
+  <div class="rankings-canvas">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-orb"></div>
+      <h1 class="hero-title">Rankings</h1>
+      <p class="hero-subtitle">KINETIC ETHER • VELOCITY LEADERBOARD</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">{{ stats.totalUsers }}</div>
+        <div class="stat-label">Total Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-value">{{ stats.avgVelocity }}</div>
+        <div class="stat-label">Avg Velocity</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-value">{{ stats.topStreak }}</div>
+        <div class="stat-label">Top Streak</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-value">+{{ stats.weeklyGrowth }}%</div>
+        <div class="stat-label">Weekly Growth</div>
+      </div>
+    </div>
+
+    <!-- Your Rank Card -->
+    <div class="your-rank-card">
+      <div class="rank-orb"></div>
+      <div class="rank-header">
+        <span class="rank-label">YOUR RANK</span>
+        <span class="rank-number">#{{ currentUser.rank }}</span>
+      </div>
+      <div class="rank-details">
+        <div class="rank-detail-item">
+          <span class="detail-label">Velocity</span>
+          <span class="detail-value" [style.color]="getVelocityColor(currentUser.velocity)">
+            {{ currentUser.velocity }}
+          </span>
+        </div>
+        <div class="rank-detail-item">
+          <span class="detail-label">Streak</span>
+          <span class="detail-value streak-value">{{ currentUser.streak }} 🔥</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard Section -->
+    <div class="section-header">
+      <h2 class="section-title">Top Performers</h2>
+      <span class="section-count">{{ topRankings.length }} shown</span>
+    </div>
+
+    <!-- Rankings List -->
+    <div class="rankings-list">
+      <div class="ranking-card" *ngFor="let user of topRankings" [class.top-three]="user.rank <= 3">
+        <!-- Rank Badge -->
+        <div class="rank-badge" [ngClass]="getRankBadgeClass(user.rank)">
+          <span class="rank-text">{{ user.rank }}</span>
+        </div>
+
+        <!-- User Info -->
+        <div class="user-info">
+          <div class="user-avatar">{{ user.avatar }}</div>
+          <div class="user-details">
+            <div class="user-name">{{ user.name }}</div>
+            <div class="user-meta">
+              <span class="user-level">LVL {{ user.level }}</span>
+              <span class="user-xp">{{ user.xp }} XP</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="user-stats">
+          <!-- Velocity -->
+          <div class="stat-item">
+            <div class="stat-item-label">Velocity</div>
+            <div class="stat-item-value" [style.color]="getVelocityColor(user.velocity)">
+              {{ user.velocity }}
+            </div>
+          </div>
+
+          <!-- Streak -->
+          <div class="stat-item">
+            <div class="stat-item-label">Streak</div>
+            <div class="stat-item-value streak-value">
+              {{ user.streak }} 🔥
+            </div>
+          </div>
+
+          <!-- Badges -->
+          <div class="stat-item">
+            <div class="stat-item-label">Badges</div>
+            <div class="stat-item-value">
+              {{ user.badges }}
+            </div>
+          </div>
+
+          <!-- Trend -->
+          <div class="stat-item trend-item">
+            <div class="trend-indicator" [style.color]="getTrendColor(user.trend)">
+              <span class="trend-icon">{{ getTrendIcon(user.trend) }}</span>
+              <span class="trend-value" *ngIf="user.trendValue > 0">{{ user.trendValue }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Spacer -->
+    <div style="height: 40px;"></div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <app-bottom-nav></app-bottom-nav>
+</ion-content>

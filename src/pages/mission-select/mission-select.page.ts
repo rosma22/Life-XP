@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { IonContent, IonSpinner } from '@ionic/angular/standalone'
 import { MissionService } from '../../services/mission.service'
 import { Mission } from '../../types'
+import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component'
 
 const CATEGORIES = [
   { key: 'all', label: 'All' },
@@ -17,7 +18,7 @@ const CATEGORIES = [
   templateUrl: './mission-select.page.html',
   styleUrls: ['./mission-select.page.scss'],
   standalone: true,
-  imports: [IonContent, IonSpinner],
+  imports: [IonContent, IonSpinner, BottomNavComponent],
 })
 export class MissionSelectPage implements OnInit {
   categories = CATEGORIES
@@ -38,6 +39,16 @@ export class MissionSelectPage implements OnInit {
     private missionService: MissionService,
     private router: Router
   ) {}
+
+  getMissionTitle(mission: Mission): string {
+    const lang = localStorage.getItem('app_lang') as 'en' | 'es' || 'es'
+    return mission.translations?.[lang]?.title ?? mission.title
+  }
+
+  getMissionDescription(mission: Mission): string {
+    const lang = localStorage.getItem('app_lang') as 'en' | 'es' || 'es'
+    return mission.translations?.[lang]?.description ?? mission.description
+  }
 
   async ngOnInit(): Promise<void> {
     try {

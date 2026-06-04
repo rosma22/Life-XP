@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Preferences } from '@capacitor/preferences'
 import { firstValueFrom } from 'rxjs'
+import { environment } from '../environments/environment'
 
 const JWT_KEY = 'auth_token'
-const API_BASE = 'http://localhost:3000'
+const API_BASE = environment.apiUrl
 
 export interface AuthResult {
   token: string

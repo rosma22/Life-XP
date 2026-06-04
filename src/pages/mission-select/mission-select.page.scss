@@ -50,7 +50,7 @@ ion-content.mission-select-page {
 
 /* Canvas */
 .select-canvas {
-  padding: 96px 20px 120px;
+  padding: 96px 20px 200px;
   max-width: 720px;
   margin: 0 auto;
   position: relative;
@@ -229,11 +229,11 @@ ion-content.mission-select-page {
   padding: 16px;
 }
 
-/* Bottom nav */
+/* Bottom nav - Confirm button */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  z-index: 50;
+  z-index: 51;
   display: flex;
   justify-content: center;
   padding: 16px 24px 28px;

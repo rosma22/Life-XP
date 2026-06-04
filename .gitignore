@@ -1,2 +1,7 @@
 node_modules/
 .angular/cache
+
+# Environment files (keep .example files)
+.env
+.env.local
+.env.*.local

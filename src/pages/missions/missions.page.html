@@ -24,7 +24,7 @@
     <!-- Section header -->
     <div class="section-header">
       <h3 class="section-title">{{ 'missions.title' | translate }}</h3>
-      <span class="section-count">{{ pendingCount }} {{ 'missions.remaining' | translate }}</span>
+      <span class="section-count">{{ pendingCount() }} {{ 'missions.remaining' | translate }}</span>
     </div>
 
     <!-- Loading -->
@@ -45,17 +45,17 @@
       </div>
     }
 
-    @if (!loading() && missions().length > 0) {
+    @if (!loading() && pendingMissions().length > 0) {
       <div class="cards-list">
-        @for (m of missions(); track m.id) {
+        @for (m of pendingMissions(); track m.id) {
           <article class="mission-card" [class.card-completed]="m.status === 'completed'" [class.card-expired]="m.status === 'expired'">
             <div class="card-accent" [style.background]="statusAccentColor(m.status)"></div>
 
             <div class="card-top">
               <div class="card-meta-col">
                 <span class="card-tag" [style.color]="categoryColor(m.mission.category)">{{ m.mission.category }}</span>
-                <h4 class="card-title">{{ m.mission.title }}</h4>
-                <p class="card-desc">{{ m.mission.description }}</p>
+                <h4 class="card-title">{{ getMissionTitle(m.mission) }}</h4>
+                <p class="card-desc">{{ getMissionDescription(m.mission) }}</p>
               </div>
               <div class="card-emoji">{{ categoryEmoji(m.mission.category) }}</div>
             </div>
@@ -93,7 +93,7 @@
         <div class="bento-cell">
           <span class="bento-icon">⭐</span>
           <p class="bento-label">Completed</p>
-          <p class="bento-value bento-purple">{{ completedCount }}</p>
+          <p class="bento-value bento-purple">{{ completedCount() }}</p>
         </div>
         <div class="bento-cell">
           <span class="bento-icon">⏱</span>

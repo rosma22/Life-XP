@@ -96,14 +96,14 @@
           <span class="section-link">{{ 'profile.view_all' | translate }}</span>
         </div>
         <div class="badges-grid">
-          @for (badge of badges; track badge.icon) {
-            <div class="badge-card" [class.badge-locked]="badge.locked">
-              <div class="badge-glow" [style.background]="badge.color + '33'"></div>
-              <div class="badge-icon-ring" [style.border-color]="badge.color + '50'">
+          @for (badge of badges; track badge.id) {
+            <div class="badge-card" [class.badge-locked]="!badge.unlocked">
+              <div class="badge-glow" [style.background]="getCategoryColor(badge.category) + '33'"></div>
+              <div class="badge-icon-ring" [style.border-color]="getCategoryColor(badge.category) + '50'">
                 <span class="badge-emoji">{{ badge.icon }}</span>
               </div>
-              <h5 class="badge-name">{{ badge.name }}</h5>
-              <p class="badge-desc">{{ badge.desc }}</p>
+              <h5 class="badge-name">{{ getAchievementName(badge) }}</h5>
+              <p class="badge-desc">{{ getAchievementDescription(badge) }}</p>
             </div>
           }
         </div>

@@ -3,7 +3,7 @@ import { RouterLink, Router } from '@angular/router'
 import { IonContent, IonSpinner } from '@ionic/angular/standalone'
 import { ProgressService } from '../../services/progress.service'
 import { AppStore } from '../../store/app.store'
-import { UserProfile, UserProgress } from '../../types'
+import { UserProfile, UserProgress, Achievement } from '../../types'
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component'
 import { I18nService } from '../../services/i18n.service'
 import { TranslatePipe } from '../../pipes/translate.pipe'
@@ -18,15 +18,9 @@ import { TranslatePipe } from '../../pipes/translate.pipe'
 export class ProfilePage implements OnInit {
   profile: UserProfile | null = null
   progress: UserProgress | null = null
+  badges: Achievement[] = []
   loading = true
   errorMessage = ''
-
-  badges = [
-    { icon: '🌅', name: 'Early Bird',   desc: '15 Consecutive Dawns', color: '#97a9ff', locked: false },
-    { icon: '📚', name: 'Bookworm',     desc: '50+ Hours Reading',    color: '#c799ff', locked: false },
-    { icon: '🧠', name: 'Neural Flow',  desc: '4hr Session Unlock',   color: '#97a9ff', locked: false },
-    { icon: '🔒', name: 'Night Owl',    desc: 'Coming Soon',          color: '#484847', locked: true  },
-  ]
 
   recentActivity = [
     { icon: '🚀', title: 'Mission Accomplished: Strategic Plan', time: 'Today • 2:45 PM', xp: 120, color: '#c799ff' },
@@ -56,18 +50,40 @@ export class ProfilePage implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      const [profile, progress] = await Promise.all([
+      const [profile, progress, achievementsData] = await Promise.all([
         this.progressService.getUserProfile(),
         this.progressService.getUserProgress(),
+        this.progressService.getUserAchievements(),
       ])
       this.profile = profile
       this.progress = progress
+      this.badges = achievementsData.achievements
       this.store.setUser(profile)
     } catch {
       this.errorMessage = 'No se pudo cargar el perfil.'
     } finally {
       this.loading = false
     }
+  }
+
+  getAchievementName(achievement: Achievement): string {
+    const lang = this.i18n.lang()
+    return achievement.translations?.[lang]?.title ?? achievement.title
+  }
+
+  getAchievementDescription(achievement: Achievement): string {
+    const lang = this.i18n.lang()
+    return achievement.translations?.[lang]?.description ?? achievement.description
+  }
+
+  getCategoryColor(category: string): string {
+    const map: Record<string, string> = {
+      missions: '#00d1ff',
+      streak: '#bef500',
+      level: '#c799ff',
+      xp: '#ff6e84',
+    }
+    return map[category] ?? '#97a9ff'
   }
 
   get xpPercent(): number {
