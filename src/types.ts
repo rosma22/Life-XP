@@ -72,6 +72,7 @@ export interface CompletionResult {
   newLevel: number
   leveledUp: boolean
   streak: number
+  streakIncreased: boolean  // Indica si fue la primera misión del día
 }
 
 export interface Achievement {

@@ -1,0 +1,38 @@
+<div class="category-animation-overlay" *ngIf="showAnimation" @fadeInOut (click)="close()">
+  <div class="animation-container">
+    
+    <!-- Category Icon Circle -->
+    <div class="icon-circle" [style.border-color]="getCategoryColor()">
+      <div class="icon-glow" [style.background]="'radial-gradient(circle, ' + getCategoryColor() + '40, transparent)'"></div>
+      <div class="category-icon">{{ getCategoryIcon() }}</div>
+      
+      <!-- Ripple Effect -->
+      <div class="ripple ripple-1" [style.border-color]="getCategoryColor()"></div>
+      <div class="ripple ripple-2" [style.border-color]="getCategoryColor()"></div>
+      <div class="ripple ripple-3" [style.border-color]="getCategoryColor()"></div>
+    </div>
+
+    <!-- Category Name -->
+    <div class="category-name" [style.color]="getCategoryColor()">
+      {{ getCategoryName() }}
+    </div>
+
+    <!-- XP Badge -->
+    <div class="xp-badge" [style.border-color]="getCategoryColor()">
+      <span class="xp-plus" [style.color]="getCategoryColor()">+</span>
+      <span class="xp-value">{{ xpGained }}</span>
+      <span class="xp-label" [style.color]="getCategoryColor()">XP</span>
+    </div>
+
+    <!-- Level Up Badge (if applicable) -->
+    <div class="level-up-badge" *ngIf="leveledUp">
+      <div class="level-up-shine"></div>
+      <span class="level-up-icon">⭐</span>
+      <span class="level-up-text">LEVEL {{ newLevel }}!</span>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message">¡Misión Completada!</div>
+
+  </div>
+</div>

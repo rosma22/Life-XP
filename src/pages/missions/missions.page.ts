@@ -1,4 +1,4 @@
-import { Component, OnInit, computed } from '@angular/core'
+import { Component, OnInit, computed, signal } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { IonContent, IonSpinner, ToastController } from '@ionic/angular/standalone'
 import { MissionService } from '../../services/mission.service'
@@ -8,13 +8,15 @@ import { UserMission, CompletionResult, Mission } from '../../types'
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component'
 import { I18nService } from '../../services/i18n.service'
 import { TranslatePipe } from '../../pipes/translate.pipe'
+import { StreakAnimationComponent } from '../../components/streak-animation/streak-animation.component'
+import { CategoryAnimationComponent } from '../../components/category-animation/category-animation.component'
 
 @Component({
   selector: 'app-missions',
   templateUrl: './missions.page.html',
   styleUrls: ['./missions.page.scss'],
   standalone: true,
-  imports: [RouterLink, IonContent, IonSpinner, BottomNavComponent, TranslatePipe],
+  imports: [RouterLink, IonContent, IonSpinner, BottomNavComponent, TranslatePipe, StreakAnimationComponent, CategoryAnimationComponent],
 })
 export class MissionsPage implements OnInit {
   errorMessage = ''
@@ -32,6 +34,22 @@ export class MissionsPage implements OnInit {
   readonly completedCount = computed(() =>
     this.store.missions().filter(m => m.status === 'completed').length
   )
+
+  // Animation state
+  showStreakAnimation = signal(false)
+  showCategoryAnimation = signal(false)
+  streakAnimationData = signal<{
+    xpGained: number
+    streak: number
+    leveledUp: boolean
+    newLevel: number
+  } | null>(null)
+  categoryAnimationData = signal<{
+    xpGained: number
+    category: UserMission['mission']['category']
+    leveledUp: boolean
+    newLevel: number
+  } | null>(null)
 
   constructor(
     private missionService: MissionService,
@@ -91,7 +109,27 @@ export class MissionsPage implements OnInit {
     try {
       const result: CompletionResult = await this.missionService.completeMission(mission.id)
       this.store.applyCompletionResult(mission.id, result)
-      await this.showRewardToast(result)
+      
+      // Decidir qué animación mostrar
+      if (result.streakIncreased) {
+        // Primera misión del día - Mostrar animación de racha
+        this.streakAnimationData.set({
+          xpGained: result.xpGained,
+          streak: result.streak,
+          leveledUp: result.leveledUp,
+          newLevel: result.newLevel
+        })
+        this.showStreakAnimation.set(true)
+      } else {
+        // Misión subsecuente - Mostrar animación de categoría
+        this.categoryAnimationData.set({
+          xpGained: result.xpGained,
+          category: mission.mission.category,
+          leveledUp: result.leveledUp,
+          newLevel: result.newLevel
+        })
+        this.showCategoryAnimation.set(true)
+      }
     } catch (err: any) {
       const msg =
         err?.status === 409 ? 'Misión ya completada.' :
@@ -99,6 +137,16 @@ export class MissionsPage implements OnInit {
         'No se pudo completar la misión.'
       await this.showErrorToast(msg)
     }
+  }
+
+  onStreakAnimationComplete(): void {
+    this.showStreakAnimation.set(false)
+    this.streakAnimationData.set(null)
+  }
+
+  onCategoryAnimationComplete(): void {
+    this.showCategoryAnimation.set(false)
+    this.categoryAnimationData.set(null)
   }
 
   statusAccentColor(status: UserMission['status']): string {

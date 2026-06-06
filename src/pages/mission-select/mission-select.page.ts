@@ -52,8 +52,19 @@ export class MissionSelectPage implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      const missions = await this.missionService.getAvailableMissions()
-      this._missions.set(missions)
+      // Obtener las misiones disponibles y las misiones ya asignadas al usuario
+      const [allMissions, userMissions] = await Promise.all([
+        this.missionService.getAvailableMissions(),
+        this.missionService.getDailyMissions()
+      ])
+
+      // Crear un Set con los IDs de las misiones ya asignadas
+      const assignedMissionIds = new Set(userMissions.map(um => um.missionId))
+
+      // Filtrar las misiones disponibles para excluir las ya asignadas
+      const availableMissions = allMissions.filter(m => !assignedMissionIds.has(m.id))
+      
+      this._missions.set(availableMissions)
     } catch {
       this.errorMessage = 'No se pudieron cargar las misiones.'
     } finally {

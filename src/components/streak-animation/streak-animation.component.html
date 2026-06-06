@@ -1,0 +1,56 @@
+<div class="streak-animation-overlay" *ngIf="showAnimation" @fadeInOut (click)="close()">
+  <div class="animation-container" @scaleIn>
+    
+    <!-- Particles Background -->
+    <div class="particles">
+      <div 
+        class="particle" 
+        *ngFor="let p of particles; let i = index"
+        [style.animation-delay.ms]="i * 50"
+      ></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      
+      <!-- Fire Icon with Pulse -->
+      <div class="fire-container" @pulse>
+        <div class="fire-glow"></div>
+        <div class="fire-icon">🔥</div>
+      </div>
+
+      <!-- Streak Number -->
+      <div class="streak-number">
+        <span class="streak-value">{{ streak }}</span>
+        <span class="streak-label">DAY STREAK!</span>
+      </div>
+
+      <!-- XP Gained -->
+      <div class="xp-badge">
+        <span class="xp-plus">+</span>
+        <span class="xp-value">{{ xpGained }}</span>
+        <span class="xp-label">XP</span>
+      </div>
+
+      <!-- Level Up Badge (if applicable) -->
+      <div class="level-up-badge" *ngIf="leveledUp">
+        <div class="level-up-shine"></div>
+        <span class="level-up-icon">⭐</span>
+        <span class="level-up-text">LEVEL {{ newLevel }}!</span>
+      </div>
+
+      <!-- Motivational Text -->
+      <div class="motivational-text">
+        <span *ngIf="streak === 1">¡Primera misión del día!</span>
+        <span *ngIf="streak > 1 && streak < 7">¡Sigue así!</span>
+        <span *ngIf="streak >= 7 && streak < 30">¡Imparable!</span>
+        <span *ngIf="streak >= 30">¡Eres una leyenda!</span>
+      </div>
+
+    </div>
+
+    <!-- Tap to dismiss -->
+    <div class="tap-hint">Toca para continuar</div>
+
+  </div>
+</div>

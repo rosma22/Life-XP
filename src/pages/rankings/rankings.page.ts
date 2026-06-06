@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { IonicModule } from '@ionic/angular'
 import { Router } from '@angular/router'
+import { IonContent } from '@ionic/angular/standalone'
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component'
 
 interface RankingUser {
@@ -20,7 +20,7 @@ interface RankingUser {
 @Component({
   selector: 'app-rankings',
   standalone: true,
-  imports: [CommonModule, IonicModule, BottomNavComponent],
+  imports: [CommonModule, IonContent, BottomNavComponent],
   templateUrl: './rankings.page.html',
   styleUrls: ['./rankings.page.scss']
 })

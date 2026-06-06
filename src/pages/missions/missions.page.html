@@ -1,5 +1,27 @@
 <ion-content [fullscreen]="true" class="missions-page">
 
+  <!-- Streak Animation Overlay (Primera misión del día) -->
+  @if (showStreakAnimation() && streakAnimationData()) {
+    <app-streak-animation
+      [xpGained]="streakAnimationData()!.xpGained"
+      [streak]="streakAnimationData()!.streak"
+      [leveledUp]="streakAnimationData()!.leveledUp"
+      [newLevel]="streakAnimationData()!.newLevel"
+      (animationComplete)="onStreakAnimationComplete()"
+    ></app-streak-animation>
+  }
+
+  <!-- Category Animation Overlay (Misiones subsecuentes) -->
+  @if (showCategoryAnimation() && categoryAnimationData()) {
+    <app-category-animation
+      [xpGained]="categoryAnimationData()!.xpGained"
+      [category]="categoryAnimationData()!.category"
+      [leveledUp]="categoryAnimationData()!.leveledUp"
+      [newLevel]="categoryAnimationData()!.newLevel"
+      (animationComplete)="onCategoryAnimationComplete()"
+    ></app-category-animation>
+  }
+
   <!-- Top Bar -->
   <header class="top-bar">
     <div class="top-bar-left">

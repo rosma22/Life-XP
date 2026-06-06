@@ -9,6 +9,19 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+/* ── Safe Area Support for iOS ── */
+.top-bar {
+  padding-top: max(14px, env(safe-area-inset-top)) !important;
+}
+
+/* Canvas with top-bar needs extra padding */
+.missions-canvas,
+.rankings-canvas,
+.profile-canvas,
+.select-canvas {
+  padding-top: calc(88px + env(safe-area-inset-top)) !important;
+}
+
 /* ── Light mode overrides ── */
 body.light-mode {
   --bg-primary: #f0f2ff;

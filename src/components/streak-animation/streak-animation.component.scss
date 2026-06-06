@@ -1,0 +1,372 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&display=swap');
+
+.streak-animation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.animation-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+/* Particles Background */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ff9500, #ff6e84);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particle-float 2s ease-out infinite;
+  
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      left: random(100) * 1%;
+      top: random(100) * 1%;
+      animation-duration: (1.5 + random(10) * 0.1) + s;
+    }
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Main Content */
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px;
+  z-index: 1;
+}
+
+/* Fire Icon */
+.fire-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.fire-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 149, 0, 0.4), rgba(255, 110, 132, 0.2), transparent);
+  border-radius: 50%;
+  filter: blur(40px);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+
+.fire-icon {
+  font-size: 100px;
+  filter: drop-shadow(0 0 30px rgba(255, 149, 0, 0.8));
+  animation: fire-flicker 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes fire-flicker {
+  0% {
+    transform: scale(1) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1.05) rotate(2deg);
+  }
+}
+
+/* Streak Number */
+.streak-number {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: shine 2s ease-in-out infinite;
+}
+
+.streak-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 900;
+  font-size: 80px;
+  line-height: 1;
+  background: linear-gradient(135deg, #ff9500, #ff6e84, #c799ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(255, 149, 0, 0.5));
+  animation: number-pop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes number-pop {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.streak-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #ff9500;
+  text-shadow: 0 0 20px rgba(255, 149, 0, 0.6);
+}
+
+/* XP Badge */
+.xp-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, rgba(199, 153, 255, 0.2), rgba(0, 209, 255, 0.2));
+  border: 2px solid #c799ff;
+  border-radius: 50px;
+  box-shadow: 0 0 30px rgba(199, 153, 255, 0.4);
+  animation: badge-slide 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s backwards;
+}
+
+@keyframes badge-slide {
+  0% {
+    transform: translateX(-100px) rotate(-10deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.xp-plus {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  color: #bef500;
+  text-shadow: 0 0 10px rgba(190, 245, 0, 0.6);
+}
+
+.xp-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.xp-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #c799ff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Level Up Badge */
+.level-up-badge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+  animation: level-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s backwards;
+}
+
+@keyframes level-bounce {
+  0% {
+    transform: scale(0) translateY(50px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15) translateY(-5px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.level-up-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shine-pass 2s ease-in-out infinite;
+}
+
+@keyframes shine-pass {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 200%;
+  }
+}
+
+.level-up-icon {
+  font-size: 28px;
+  animation: star-rotate 2s linear infinite;
+}
+
+@keyframes star-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.level-up-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Motivational Text */
+.motivational-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #adaaaa;
+  text-align: center;
+  margin-top: 12px;
+  animation: text-fade 1s ease-in 0.8s backwards;
+}
+
+@keyframes text-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tap Hint */
+.tap-hint {
+  position: absolute;
+  bottom: 40px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #adaaaa;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  animation: hint-pulse 2s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .fire-container {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .fire-icon {
+    font-size: 70px;
+  }
+  
+  .streak-value {
+    font-size: 60px;
+  }
+  
+  .streak-label {
+    font-size: 14px;
+  }
+  
+  .xp-value {
+    font-size: 24px;
+  }
+  
+  .level-up-text {
+    font-size: 16px;
+  }
+}
